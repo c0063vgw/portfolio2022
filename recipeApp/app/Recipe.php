@@ -8,5 +8,5 @@ class Recipe extends Model
 {
     protected $table = "recipes";
 
-    protected $filltable = ['id', 'recipename', 'energy', 'salt', 'num_people', 'time', 'url'];
+    protected $filltable = ['recipe_id', 'tag_id', 'recipename', 'energy', 'salt', 'num_people', 'time', 'food_items', 'steps', 'url'];
 }
