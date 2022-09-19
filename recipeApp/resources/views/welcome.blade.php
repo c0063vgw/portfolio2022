@@ -80,10 +80,11 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
+                <a href="{{ url('/search') }}">
+                    <div class="title m-b-md">
+                        recipeApp
+                    </div>
+                </a>
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>

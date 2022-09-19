@@ -1,4 +1,4 @@
-@extends('layouts.noauth')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
@@ -13,7 +13,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    タグを追加しました。
                 </div>
             </div>
         </div>

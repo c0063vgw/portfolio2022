@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Recipe;  //必要なデータをuse
+use App\Tag;
+use App\User;
 
 class RecipeListController extends Controller
 {
@@ -35,7 +37,26 @@ class RecipeListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        //dd($data);
+        // POSTされたデータをDB（memosテーブル）に挿入
+        // MEMOモデルにDBへ保存する命令を出す
+
+        //同じタグがあるか確認
+        $exist_tag = Tag::where('name', $data['tag'])->first();
+        //dd($is_exist);
+        if( empty($exist_tag['id']) ){
+            //先にタグをインサート
+            $tag_id = Tag::insertGetId(['name' => $data['tag'], 'user_id' => $data['user_id']]);
+        }else{
+            $tag_id = $exist_tag['id'];
+        }
+        //dd($tag_id);
+        //タグIDをrecipesテーブルにいれる
+        Recipe::where('recipe_id', $data['recipe_id'])->update(['tag_id' => $tag_id ]);
+        $id = $data['recipe_id'];
+        // リダイレクト処理
+        return redirect()->route("edit");
     }
 
     /**
@@ -47,7 +68,7 @@ class RecipeListController extends Controller
     public function show(Request $request)
     {
         $recipe_list = Recipe::orderBy("recipe_id", "asc")->paginate(9);
-
+        //$user = \Auth::user();
         $query = Recipe::query();
 
         if ($search = $request->input('search')){
@@ -72,9 +93,9 @@ class RecipeListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('edit');
     }
 
     /**

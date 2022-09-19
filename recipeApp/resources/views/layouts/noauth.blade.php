@@ -105,7 +105,7 @@
                                 @endif
                                 <!-- ページ固有要素 -->
                                 <div class="px-4">
-                                    @include("recipe.recipe_search_form")
+                                    @include("recipe.recipe_home_form")
                                     <div class="py-1"></div>
                                     <table class="table-auto w-full table-warning border shadow my-6">
                                         <tbody>
@@ -117,9 +117,6 @@
                                             </td>
                                             <td class="px-1 py-2 text-right">👥{{ $recipe->num_people }}</td>
                                             <td class="px-1 py-2 text-left">🕘{{ $recipe->time }} min</td>
-                                            <td class="py-2">
-                                                @include("recipe.recipe_tag_form")
-                                            </td>
                                             <td class="px-3 py-2">
                                                 <a href="#">比較</a>
                                             </td>
