@@ -15,7 +15,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
@@ -112,11 +112,11 @@
                                         @foreach($recipe_list as $recipe)
                                         <tr class="border">
                                             <td class="px-3 py-2">
-                                                <h5><a href='{{ $recipe->url }}' class="widelink" target="_blank">🍴{{ $recipe->recipename }}</a>
+                                                <h5><a href='{{ $recipe->url }}' class="widelink text-pink font-weight-bold" target="_blank"><i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}</a>
                                                 </h5>
                                             </td>
-                                            <td class="px-1 py-2 text-right">👥{{ $recipe->num_people }}</td>
-                                            <td class="px-1 py-2 text-left">🕘{{ $recipe->time }} min</td>
+                                            <td class="px-1 py-2 text-right"><i class="fas fa-user-friends mr-1 text-primary"></i>{{ $recipe->num_people }}</td>
+                                            <td class="px-1 py-2 text-left"><i class="far fa-clock mr-1 lead"></i>{{ $recipe->time }} min</td>
                                             <td class="py-2">
                                                 @include("recipe.recipe_tag_form")
                                             </td>

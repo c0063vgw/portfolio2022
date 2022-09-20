@@ -417,6 +417,12 @@ h6, .h6 {
   line-height: 1.2;
 }
 
+.display-5 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
 hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -9137,6 +9143,10 @@ a.text-warning:hover, a.text-warning:focus {
 
 .text-danger {
   color: #e3342f !important;
+}
+
+.text-pink {
+  color: #f66d9b !important;
 }
 
 a.text-danger:hover, a.text-danger:focus {
