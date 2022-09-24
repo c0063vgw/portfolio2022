@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'SimpleNote') }}</title>
+    <title>{{ config('app.name', 'recipeApp') }}</title>
 
     <!-- Scripts -->
     <script src="{{ '/js/app.js' }}" defer></script>
@@ -27,7 +27,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/search') }}">
                     {{ config('app.name', 'recipeApp') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -45,21 +45,21 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link text-right" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link text-right" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item text-right" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
@@ -85,7 +85,7 @@
           <div class="row" style='height: 92vh;'>
             <div class="col-md-2 p-0">
               <div class="card h-100">
-              <div class="card-header">タグ一覧</div>
+              <div class="card-header bg-pink">タグ一覧</div>
               <div class="card-body py-2 px-4">
                 <a class='d-block' href='/'>全て表示</a>
                 </div>
@@ -93,8 +93,8 @@
             </div>
             <div class="col-md-7 p-0">
               <div class="card h-100">
-                <div class="card-header d-flex">レシピ一覧 </div>
-                <div class="card-body p-2">
+                <div class="card-header d-flex bg-pink">レシピ一覧 </div>
+                <div class="card-body p-1">
                     <div class="py-12">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -112,22 +112,35 @@
                                         @foreach($recipe_list as $recipe)
                                         <tr class="border">
                                             <td class="px-3 py-2">
-                                                <h5><a href='{{ $recipe->url }}' class="widelink text-pink font-weight-bold" target="_blank"><i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}</a>
+                                                <h5><a href='{{ $recipe->url }}' class="widelink text-pink font-weight-bold" target="_blank">
+                                                    <i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}</a>
                                                 </h5>
                                             </td>
-                                            <td class="px-1 py-2 text-right"><i class="fas fa-user-friends mr-1 text-primary"></i>{{ $recipe->num_people }}</td>
-                                            <td class="px-1 py-2 text-left"><i class="far fa-clock mr-1 lead"></i>{{ $recipe->time }} min</td>
+                                            <td class="px-1 py-2">
+                                                <span class="text-left"><i class="fas fa-user-friends mr-1 text-primary"></i>{{ $recipe->num_people }}</span>
+                                                <span class="text-right"><i class="far fa-clock mr-1 lead"></i>{{ $recipe->time }} min</span>
+                                            </td>
+                                            @auth
                                             <td class="py-2">
                                                 @include("recipe.recipe_tag_form")
                                             </td>
+                                            @endauth
                                             <td class="px-3 py-2">
-                                                <a href="#">比較</a>
+                                                @if ($recipe->tag_id == 0)
+                                                <a role="button" class="btn btn-outline-orange btn-sm font-weight-bold disabled" aria-disabled="true">
+                                                    <i class="far fa-object-ungroup mr-1"></i>比較
+                                                </a>
+                                                @else
+                                                <a role="button" class="btn btn-outline-danger btn-sm font-weight-bold" href="{{ url("/compare/$recipe->recipe_id") }}">
+                                                    <i class="far fa-object-ungroup mr-1"></i>比較
+                                                </a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="py-3 d-flex justify-content-center ">
+                                    <div class="py-2 d-flex justify-content-center ">
                                         {{ $recipe_list->appends(request()->input())->links('pagination::bootstrap-4') }}
                                     </div>
                                 </div>

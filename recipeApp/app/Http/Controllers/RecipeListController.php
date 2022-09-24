@@ -28,6 +28,11 @@ class RecipeListController extends Controller
     {
         //
     }
+    
+    public function responce()
+    {
+        return \view('responce');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -54,9 +59,10 @@ class RecipeListController extends Controller
         //dd($tag_id);
         //タグIDをrecipesテーブルにいれる
         Recipe::where('recipe_id', $data['recipe_id'])->update(['tag_id' => $tag_id ]);
-        $id = $data['recipe_id'];
+        $recipe_id = $data['recipe_id'];
+        $url = $data['url'];
         // リダイレクト処理
-        return redirect()->route("edit");
+        return view("responce", ["recipe_id" => $recipe_id, "url" => $url]);
     }
 
     /**
@@ -67,7 +73,7 @@ class RecipeListController extends Controller
      */
     public function show(Request $request)
     {
-        $recipe_list = Recipe::orderBy("recipe_id", "asc")->paginate(9);
+        $recipe_list = Recipe::orderBy("recipe_id", "asc")->paginate(10);
         //$user = \Auth::user();
         $query = Recipe::query();
 
@@ -81,7 +87,7 @@ class RecipeListController extends Controller
                 $query->where('recipename', 'like', '%'.$value.'%');
             }
 
-            $recipe_list = $query->paginate(9);
+            $recipe_list = $query->paginate(10);
         }
 
         return \view("search", ["recipe_list" => $recipe_list, "search" => $search]);
@@ -93,7 +99,7 @@ class RecipeListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         return view('edit');
     }
@@ -108,6 +114,20 @@ class RecipeListController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function compare($id)
+    {
+        $recipe = Recipe::where('recipe_id', $id)->first();
+
+        $recipe_list = Recipe::where('tag_id', $recipe['tag_id'])
+                        ->where("recipe_id", "!=", $recipe['recipe_id'])
+                        ->orderByRaw("time/num_people desc, steps desc, food_items desc")
+                        ->paginate(1);
+
+        //dd($recipe_list);
+
+        return \view("compare", ["recipe" => $recipe, "recipe_list" => $recipe_list]);
     }
 
     /**
