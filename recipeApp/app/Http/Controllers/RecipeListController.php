@@ -127,12 +127,20 @@ class RecipeListController extends Controller
             return [$item->recipe_id => $item];
         })->all();
         //dd($items);
-        $recipe_list = Recipe::where("tag_id", $recipe['tag_id'])
-                        ->where("recipe_id", "!=", $recipe['recipe_id'])
-                        ->orderByRaw("time/num_people desc, steps desc, food_items desc")
-                        ->paginate(1);
-
-        return \view("compare", ["recipe" => $recipe, "items" => $items,"recipe_list" => $recipe_list]);
+        //$sub = Ingredient::groupBy("recipe_id")->get();
+        $recipe_list = Recipe::select("*")
+                    ->where("tag_id", $recipe['tag_id'])
+                    ->where("recipes.recipe_id", "!=", $recipe['recipe_id'])
+                    ->orderByRaw("time/num_people desc, steps desc, food_items desc")
+                    ->paginate(1);
+        //dd($recipe_list);
+        foreach($recipe_list as $val) {
+        $item_list = Ingredient::all()->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
+            return [$item->recipe_id => $item];
+        })->all();
+        }
+        //dd($item_list);
+        return \view("compare", ["recipe" => $recipe, "items" => $items,"recipe_list" => $recipe_list, "item_list" => $item_list]);
     }
 
     /**

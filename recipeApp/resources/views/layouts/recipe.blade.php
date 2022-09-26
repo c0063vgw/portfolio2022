@@ -105,7 +105,7 @@
                                 @endif
                                 <!-- ページ固有要素 -->
                                 <div>
-                                    <a href='{{ $recipe->url }}' role="button" class="btn btn-outline-red btn-block text-pink" target="_blank" style="width: auto;">
+                                    <a href='{{ $recipe->url }}' role="button" class="shadow btn btn-outline-red btn-block text-pink" target="_blank" style="width: auto;">
                                         <h5 class="font-weight-bold pt-1">
                                             <i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}
                                         </h5>
