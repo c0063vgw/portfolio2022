@@ -44,7 +44,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
+                            <li class="nav-item ml-auto">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
@@ -53,7 +53,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown ml-auto">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
@@ -104,7 +104,61 @@
                                 </div>
                                 @endif
                                 <!-- ページ固有要素 -->
-                                {{ $recipe->recipename }}
+                                <div>
+                                    <a href='{{ $recipe->url }}' role="button" class="btn btn-outline-red btn-block text-pink" target="_blank" style="width: auto;">
+                                        <h5 class="font-weight-bold pt-1">
+                                            <i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}
+                                        </h5>
+                                    </a>
+                                    <div class="card-columns">
+                                        <div class="card border-white mt-3">
+                                            <table class="table">
+                                                <thead class="text-white">
+                                                    <tr>
+                                                        <td class="px-2 display-6 bg-orange">調理時間</td>
+                                                        <td class="px-2 display-6 bg-orange">{{ $recipe->time }} min</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-2 display-6 bg-orange">エネルギー</td>
+                                                        <td class="px-2 display-6 bg-orange">{{ $recipe->energy }} kal</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-2 display-6 bg-orange">食塩相当量</td>
+                                                        <td class="px-2 display-6 bg-orange">{{ $recipe->salt }} g</td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="card border-danger">
+                                            <div class="card-header display-6 text-white bg-orange">
+                                                手順
+                                            </div>
+                                            <tr>
+                                                <th></th>
+                                                <td></td>
+                                            </tr>
+                                        </div>
+                                        <div class="card border-danger mt-3">
+                                            <div class="card-header display-6 text-white bg-orange">
+                                                材料・分量
+                                            </div>
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    @foreach($items as $item)
+                                                    @foreach($item as $val)
+                                                    <tr>
+                                                        
+                                                        <th>{{ $val->ingredient }}</th>
+                                                        <td>{{ $val->quantity}}</td>
+                                                        @endforeach
+                                                        @endforeach
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                                 <!-- /ページ固有要素 ここまで -->
                             </div>
                         </div>

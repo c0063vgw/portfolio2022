@@ -105,8 +105,9 @@ address {
 ol,
 ul,
 dl {
-  display: flex;
-  flex-wrap: wrap;
+  display:flex;
+  flex-wrap:wrap;
+  width: 100%;
 }
 
 ol ol,
@@ -117,12 +118,34 @@ ul ol {
 }
 
 dt {
-  font-weight: 700;
+  float: left;
+  width: 50%;
+  padding-top: 0.5em;
+  margin-bottom: 0.1rem;
 }
 
 dd {
-  margin-bottom: 0.5rem;
-  margin-left: 0;
+  float: left;
+  clear: left;
+  width: 50%;
+  padding: 0.5rem;
+  margin-bottom: 0.1rem;
+}
+
+.recipe_info dl {
+  display:flex;
+  flex-wrap:wrap;
+  width: 100%;
+}
+
+.recipe_info dt {
+  width: 50%;
+  margin-bottom: 0.1rem;
+}
+
+.recipe_info dd {
+  width: 50%;
+  margin-bottom: 0.1rem;
 }
 
 blockquote {
@@ -158,9 +181,6 @@ a {
   color: #3490dc;
   text-decoration: none;
   background-color: transparent;
-}
-.widelink {
-  display: block;
 }
 
 a:hover {
@@ -419,6 +439,12 @@ h6, .h6 {
 
 .display-5 {
   font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-6 {
+  font-size: 1.0rem;
   font-weight: 300;
   line-height: 1.2;
 }
@@ -1516,7 +1542,7 @@ pre code {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(252, 75, 84, 0.05);
 }
 
 .table-hover tbody tr:hover {
@@ -2704,6 +2730,31 @@ fieldset:disabled a.btn {
   border-color: #343a40;
 }
 .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-dark.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
+}
+
+.btn-outline-red {
+  color: #ef2929;
+  border-color: #ef2929;
+}
+.btn-outline-red:hover {
+  color: #fff;
+  background-color: #f7cfc7;
+  border-color: #f06242;
+}
+.btn-outline-red:focus, .btn-outline-red.focus {
+  box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
+}
+.btn-outline-red.disabled, .btn-outline-red:disabled {
+  color: #ef2929;
+  background-color: transparent;
+}
+.btn-outline-red:not(:disabled):not(.disabled):active, .btn-outline-red:not(:disabled):not(.disabled).active, .show > .btn-outline-orange.dropdown-toggle {
+  color: #fff;
+  background-color: #ef2929;
+  border-color: #ef2929;
+}
+.btn-outline-red:not(:disabled):not(.disabled):active:focus, .btn-outline-red:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-orange.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
 }
 
@@ -4395,8 +4446,8 @@ input[type=button].btn-block {
 }
 @media (min-width: 576px) {
   .card-columns {
-    -moz-column-count: 3;
-         column-count: 3;
+    -moz-column-count: 2;
+         column-count: 2;
     -moz-column-gap: 1.25rem;
          column-gap: 1.25rem;
     orphans: 1;
@@ -5999,6 +6050,10 @@ button.bg-secondary:focus {
 
 .bg-pink {
   background-color: #f9d6d5 !important;
+}
+
+.bg-orange {
+  background-color: #f6993f !important;
 }
 
 a.bg-success:hover, a.bg-success:focus,
@@ -9296,6 +9351,10 @@ h3 {
   .table {
     border-collapse: collapse !important;
   }
+  .table.a.widelink {
+    display: inline-block;
+    width: fit-content;
+  }
   .table td,
 .table th {
     background-color: #fff !important;
@@ -9317,4 +9376,5 @@ h3 {
     color: inherit;
     border-color: #dee2e6;
   }
+
 }

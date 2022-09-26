@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Recipe;  //必要なデータをuse
 use App\Tag;
 use App\User;
+use App\Ingredient;
+use App\Process;
 
 class RecipeListController extends Controller
 {
@@ -118,16 +120,19 @@ class RecipeListController extends Controller
 
     public function compare($id)
     {
-        $recipe = Recipe::where('recipe_id', $id)->first();
+        $recipe = Recipe::where("recipe_id", $id)
+                ->first();
 
-        $recipe_list = Recipe::where('tag_id', $recipe['tag_id'])
+        $items = Ingredient::all()->where('recipe_id', $id)->mapToGroups(function ($item, $key) {
+            return [$item->recipe_id => $item];
+        })->all();
+        //dd($items);
+        $recipe_list = Recipe::where("tag_id", $recipe['tag_id'])
                         ->where("recipe_id", "!=", $recipe['recipe_id'])
                         ->orderByRaw("time/num_people desc, steps desc, food_items desc")
                         ->paginate(1);
 
-        //dd($recipe_list);
-
-        return \view("compare", ["recipe" => $recipe, "recipe_list" => $recipe_list]);
+        return \view("compare", ["recipe" => $recipe, "items" => $items,"recipe_list" => $recipe_list]);
     }
 
     /**
