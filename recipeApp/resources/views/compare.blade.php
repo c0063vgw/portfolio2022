@@ -5,10 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-12 p-0">
             <div class="card">
-                <div class="card-header bg-pink d-flex justify-content-center ">
+                <div class="card-header bg-grad-grade d-flex justify-content-center py-1">
+                    <span class="text-left mt-3 ml-2 text-danger"><h5>High</h5></span>
                     <ul class="pagination pagination-sm justify-content-center">
                         {{ $recipe_list->appends(request()->input())->links() }}
                     </ul>
+                    <span class="text-right mt-3 mr-2 text-indigo"><h5>Low</h5></span>
                 </div>
                 <div class="card-body">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -30,6 +32,7 @@
                                     <div class="card-columns">
                                         <div class="card border-white mt-3">
                                             @foreach($recipe_list as $val)
+                                            @if(!@empty($val))
                                             <table class="table">
                                                 <thead class="text-white">
                                                     <tr>
@@ -46,32 +49,56 @@
                                                     </tr>
                                                 </thead>
                                             </table>
+                                            @endif
                                             @endforeach
                                         </div>
-                                        <div class="card border-danger">
-                                            <div class="card-header display-6 text-white bg-orange">
-                                                手順
+                                        <div class="accordion" id="accordion2">
+                                            <div class="card border-danger">
+                                                <button type="button" class="btn btn-block card-header text-white bg-orange" data-toggle="collapse" data-target="#process2" aria-expanded="false" aria-controls="process2">
+                                                    <span class="display-6"><i class="fas fa-chevron-down mr-1"></i>手順</span>
+                                                </button>
+                                                <div id="process2" class="collapse" aria-labelledby="headingOne" data-parent="#accordion2">
+                                                    <table class="table table-sm">
+                                                        <tbody>
+                                                            @foreach($process_list as $process)
+                                                            @foreach($process as $val_1)
+                                                            @if(!@empty($val_1->recipe_id))
+                                                            <tr>
+                                                                @if($val_1->num != 0)
+                                                                <th>{{ $val_1->num }}</th>
+                                                                @else
+                                                                <th></th>
+                                                                @endif
+                                                                <td>{{ $val_1->process}}</td>
+                                                            </tr>
+                                                            @endif
+                                                            @endforeach
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <tr>
-                                                <th></th>
-                                                <td></td>
-                                            </tr>
                                         </div>
                                         <div class="card border-danger mt-3">
-                                            <div class="card-header display-6 text-white bg-orange">
-                                                材料・分量
+                                            <div class="card-header display-6 text-white text-center bg-orange">
+                                                @foreach($recipe_list as $val)
+                                                @if(!@empty($val->recipe_id))
+                                                材料・分量（{{ $val->num_people }}人分）
+                                                @endif
+                                                @endforeach
                                             </div>
                                             <table class="table table-sm">
                                                 <tbody>
                                                     @foreach($item_list as $item)
-                                                    @foreach($item as $val)
+                                                    @foreach($item as $val_2)
+                                                    @if(!@empty($val_2->recipe_id))
                                                     <tr>
-                                                        
-                                                        <th>{{ $val->ingredient }}</th>
-                                                        <td>{{ $val->quantity}}</td>
-                                                        @endforeach
-                                                        @endforeach
+                                                        <th>{{ $val_2->ingredient }}</th>
+                                                        <td>{{ $val_2->quantity}}</td>
                                                     </tr>
+                                                    @endif
+                                                    @endforeach
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>

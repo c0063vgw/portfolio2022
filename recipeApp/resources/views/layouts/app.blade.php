@@ -17,6 +17,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ '/css/app.css' }}" rel="stylesheet">
@@ -25,10 +26,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-grad-app shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/search') }}">
-                    {{ config('app.name', 'recipeApp') }}
+                    <span class="font-sans display-5 text-white">{{ config('app.name', 'recipeApp') }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -85,7 +86,7 @@
           <div class="row" style='height: 92vh;'>
             <div class="col-md-2 p-0">
               <div class="card h-100">
-              <div class="card-header bg-pink">タグ一覧</div>
+                <div class="card-header lead bg-grad-left text-white">タグ一覧</div>
               <div class="card-body py-2 px-4">
                 <a class='d-block' href='/'>全て表示</a>
                 </div>
@@ -93,7 +94,7 @@
             </div>
             <div class="col-md-7 p-0">
               <div class="card h-100">
-                <div class="card-header d-flex bg-pink">レシピ一覧 </div>
+                <div class="card-header lead d-flex bg-grad-index text-white">レシピ一覧 </div>
                 <div class="card-body p-1">
                     <div class="py-12">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -129,12 +130,12 @@
                                             @endauth
                                             <td class="px-3 py-2">
                                                 @if ($recipe->tag_id == 0)
-                                                <a role="button" class="btn btn-outline-orange btn-sm font-weight-bold disabled" aria-disabled="true">
-                                                    <i class="far fa-object-ungroup mr-1"></i>比較
+                                                <a role="button" class="btn btn-outline-orange btn-sm disabled" aria-disabled="true">
+                                                    <i class="far fa-clone mr-1"></i>比較
                                                 </a>
                                                 @else
                                                 <a role="button" class="btn btn-outline-danger btn-sm font-weight-bold" href="{{ url("/compare/$recipe->recipe_id") }}">
-                                                    <i class="far fa-object-ungroup mr-1"></i>比較
+                                                    <i class="far fa-clone mr-1"></i>比較
                                                 </a>
                                                 @endif
                                             </td>

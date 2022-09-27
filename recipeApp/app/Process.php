@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Process extends Model
 {
-    protected $table = "Processes";
+    protected $table = "processes";
 
     protected $filltable = ['recipe_id', 'num', 'process'];
 }

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="card">
-            <div class="card-header bg-pink">Dashboard</div>
+            <div class="card-header lead text-indigo bg-pink">Dashboard</div>
             <div class="card-body">
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -15,7 +15,7 @@
             </div>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a role="button" class="btn btn-outline-orange" href="{{ $url }}">戻る</a>
-                <button type="button" class="btn btn-outline-orange" onClick="#">タグを編集</button>
+                <a role="button" class="btn btn-outline-orange" href="{{ url("/compare/$recipe_id") }}">タグを編集</a>
             </div>
         </div>
     </div>

@@ -7,12 +7,12 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
-  --blue: #3490dc;
+  --blue: #9ef6e3;
   --indigo: #6574cd;
   --purple: #9561e2;
   --pink: #f66d9b;
   --red: #e3342f;
-  --orange: #f6993f;
+  --orange: #ffb367;
   --yellow: #ffed4a;
   --green: #38c172;
   --teal: #4dc0b5;
@@ -6120,6 +6120,34 @@ button.bg-dark:focus {
   background-color: transparent !important;
 }
 
+.bg-grad-app {
+  background: linear-gradient(-225deg, #f6993f 0%, #f9d6d5 100%);
+}
+
+.bg-grad-header {
+  background: linear-gradient(-225deg, #f6993f 0%, #FFBAC3 56%, #f9d6d5 90%, #9ef6e3 100%);
+}
+
+.bg-grad-grade {
+  background: linear-gradient(-225deg, #FFBAC3 0%, #f9d6d5 56%, #9ef6e3 100%);
+}
+
+.bg-grad-center {
+  background: linear-gradient(-225deg, #f6993f 10%, #FFBAC3 100%);
+}
+
+.bg-grad-index {
+  background: linear-gradient(-225deg, #f6993f 10%, #f9d6d5 100%);
+}
+
+.bg-grad-left {
+  background: linear-gradient(-225deg, #f6993f 40%, #ffb367 100%);
+}
+
+.bg-grad-white {
+  background: radial-gradient(#fff, #FFBAC3);
+}
+
 .border {
   border: 1px solid #dee2e6 !important;
 }
@@ -9181,6 +9209,11 @@ button.bg-dark:focus {
   font-style: italic !important;
 }
 
+.font-sans{
+  font-family: 'Quicksand', sans-serif;
+  letter-spacing: 0.3rem;
+}
+
 .text-white {
   color: #fff !important;
 }
@@ -9251,6 +9284,10 @@ a.text-light:hover, a.text-light:focus {
 
 a.text-dark:hover, a.text-dark:focus {
   color: #121416 !important;
+}
+
+.text-indigo {
+  color: #6574cd !important;
 }
 
 .text-body {

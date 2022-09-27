@@ -25,10 +25,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-grad-header shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/search') }}">
-                    {{ config('app.name', 'recipeApp') }}
+                    <span class="font-sans display-5 text-white">{{ config('app.name', 'recipeApp') }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto display-6">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item ml-auto">
@@ -85,7 +85,7 @@
           <div class="row" style='height: 92vh;'>
             <div class="col-md-2 p-0">
               <div class="card h-100">
-              <div class="card-header bg-pink">タグ一覧</div>
+              <div class="card-header lead bg-grad-left text-white">タグ一覧</div>
               <div class="card-body py-2 px-4">
                 <a class='d-block' href='/'>全て表示</a>
                 </div>
@@ -93,7 +93,7 @@
             </div>
             <div class="col-md-5 p-0">
               <div class="card h-100">
-                <div class="card-header d-flex bg-pink">比較元 </div>
+                <div class="card-header lead d-flex bg-grad-center text-white">比較元 </div>
                 <div class="card-body py-4">
                     <div class="py-12">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -129,27 +129,43 @@
                                                 </thead>
                                             </table>
                                         </div>
-                                        <div class="card border-danger">
-                                            <div class="card-header display-6 text-white bg-orange">
-                                                手順
+                                        <div class="accordion" id="accordion1">
+                                            <div class="card border-danger">
+                                                <button type="button" class="btn btn-block card-header text-white bg-orange" data-toggle="collapse" data-target="#process1" aria-expanded="false" aria-controls="process1">
+                                                    <span class="display-6"><i class="fas fa-chevron-down mr-1"></i>手順</span>
+                                                </button>
+                                                <div id="process1" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
+                                                    <table class="table table-sm">
+                                                        <tbody>
+                                                            @foreach($processes as $process)
+                                                            @foreach($process as $val_1)
+                                                            <tr>
+                                                                @if($val_1->num != 0)
+                                                                <th>{{ $val_1->num }}</th>
+                                                                @else
+                                                                <th></th>
+                                                                @endif
+                                                                <td>{{ $val_1->process}}</td>
+                                                                @endforeach
+                                                                @endforeach
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <tr>
-                                                <th></th>
-                                                <td></td>
-                                            </tr>
                                         </div>
                                         <div class="card border-danger mt-3">
-                                            <div class="card-header display-6 text-white bg-orange">
-                                                材料・分量
+                                            <div class="card-header display-6 text-white text-center bg-orange">
+                                                材料・分量（{{ $recipe->num_people }}人分）
                                             </div>
                                             <table class="table table-sm">
                                                 <tbody>
                                                     @foreach($items as $item)
-                                                    @foreach($item as $val)
+                                                    @foreach($item as $val_2)
                                                     <tr>
                                                         
-                                                        <th>{{ $val->ingredient }}</th>
-                                                        <td>{{ $val->quantity}}</td>
+                                                        <th>{{ $val_2->ingredient }}</th>
+                                                        <td>{{ $val_2->quantity}}</td>
                                                         @endforeach
                                                         @endforeach
                                                     </tr>
