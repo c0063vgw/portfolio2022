@@ -18,10 +18,10 @@ int main(int argc, char *argv[])
     vector<string> line, s_cate;    //文字列読み込み用配列
 
     stringstream path;  //ディレクトリのパスを指定
-    path << "/home/hika4423/github/recipe/recipeApp/recipeApp/data_file/category/";
+    path << "../database/data_file/";
 
     //入出力ファイルを指定
-    ifstream in_file(path.str() + file_name);
+    ifstream in_file(file_name);
     ofstream out_file1(path.str() + file_name.erase(file_name.find('.')) + "_l.csv");
     ofstream out_file2(path.str() + file_name + "_s.csv");
     ofstream out_file3(path.str() + "item_tag.csv");
