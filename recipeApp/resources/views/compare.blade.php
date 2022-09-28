@@ -5,6 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12 p-0">
             <div class="card">
+                @if(!@empty($recipe_list))
                 <div class="card-header bg-grad-grade d-flex justify-content-center py-1">
                     <span class="text-left mt-3 ml-2 text-danger"><h5>High</h5></span>
                     <ul class="pagination pagination-sm justify-content-center">
@@ -12,6 +13,11 @@
                     </ul>
                     <span class="text-right mt-3 mr-2 text-indigo"><h5>Low</h5></span>
                 </div>
+                @else
+                <div class="card-header bg-grad-grade">
+                    <div class=" lead text-indigo">Dashboard</div>
+                </div>
+                @endif
                 <div class="card-body">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -22,6 +28,7 @@
                                 @endif
                                 <!-- ページ固有要素 -->
                                 <div class="pr-2">
+                                    @if(!@empty($recipe_list))
                                     @foreach($recipe_list as $val)
                                     <a href='{{ $val->url }}' role="button" class="shadow btn btn-outline-red btn-block text-pink" target="_blank" style="width: auto;">
                                         <h5 class="font-weight-bold pt-1">
@@ -29,10 +36,13 @@
                                         </h5>
                                     </a>
                                     @endforeach
+                                    @else
+                                    <div class="text-danger">比較可能なレシピがありません</div>
+                                    @endif
+                                    @if(!@empty($recipe_list))
                                     <div class="card-columns">
                                         <div class="card border-white mt-3">
                                             @foreach($recipe_list as $val)
-                                            @if(!@empty($val))
                                             <table class="table">
                                                 <thead class="text-white">
                                                     <tr>
@@ -49,9 +59,9 @@
                                                     </tr>
                                                 </thead>
                                             </table>
-                                            @endif
                                             @endforeach
                                         </div>
+                                        @if(!@empty($process_list))
                                         <div class="accordion" id="accordion2">
                                             <div class="card border-danger">
                                                 <button type="button" class="btn btn-block card-header text-white bg-orange" data-toggle="collapse" data-target="#process2" aria-expanded="false" aria-controls="process2">
@@ -62,7 +72,6 @@
                                                         <tbody>
                                                             @foreach($process_list as $process)
                                                             @foreach($process as $val_1)
-                                                            @if(!@empty($val_1->recipe_id))
                                                             <tr>
                                                                 @if($val_1->num != 0)
                                                                 <th>{{ $val_1->num }}</th>
@@ -71,7 +80,6 @@
                                                                 @endif
                                                                 <td>{{ $val_1->process}}</td>
                                                             </tr>
-                                                            @endif
                                                             @endforeach
                                                             @endforeach
                                                         </tbody>
@@ -79,31 +87,30 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
+                                        @if(!@empty($recipe_list))
                                         <div class="card border-danger mt-3">
                                             <div class="card-header display-6 text-white text-center bg-orange">
                                                 @foreach($recipe_list as $val)
-                                                @if(!@empty($val->recipe_id))
-                                                材料・分量（{{ $val->num_people }}人分）
-                                                @endif
+                                                    材料・分量（{{ $val->num_people }}人分）
                                                 @endforeach
                                             </div>
                                             <table class="table table-sm">
                                                 <tbody>
                                                     @foreach($item_list as $item)
                                                     @foreach($item as $val_2)
-                                                    @if(!@empty($val_2->recipe_id))
                                                     <tr>
                                                         <th>{{ $val_2->ingredient }}</th>
                                                         <td>{{ $val_2->quantity}}</td>
                                                     </tr>
-                                                    @endif
                                                     @endforeach
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
-                                        
+                                        @endif
                                     </div>
+                                    @endif
                                 </div>
                                 <!-- /ページ固有要素 ここまで -->
                             </div>

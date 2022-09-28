@@ -138,18 +138,17 @@ class RecipeListController extends Controller
                     ->paginate(1);
         
         foreach($recipe_list as $val) {
-        $item_list = Ingredient::all()->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
-            return [$item->recipe_id => $item];
-        })->all();
-        }
-
-        foreach($recipe_list as $val) {
+            $item_list = Ingredient::all()->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
+                return [$item->recipe_id => $item];
+            })->all();
             $process_list = Process::all()->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
                 return [$item->recipe_id => $item];
             })->all();
+            
+            return \view("compare", compact("recipe", "items", "processes","recipe_list", "item_list", "process_list"));
         }
         //dd($process_list);
-        return \view("compare", compact("recipe", "items", "processes","recipe_list", "item_list", "process_list"));
+        return \view("compare", compact("recipe", "items", "processes"));
     }
 
     /**
