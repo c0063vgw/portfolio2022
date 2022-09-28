@@ -6,7 +6,7 @@
         <div class="col-md-12 p-0">
             <div class="card">
                 @if(!@empty($recipe_list))
-                <div class="card-header bg-grad-grade d-flex justify-content-center py-1">
+                <div class="card-header bg-grad-grade d-flex justify-content-center py-0">
                     <span class="text-left mt-3 ml-2 text-danger"><h5>High</h5></span>
                     <ul class="pagination pagination-sm justify-content-center">
                         {{ $recipe_list->appends(request()->input())->links() }}

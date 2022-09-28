@@ -15,7 +15,7 @@
             </div>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a role="button" class="btn btn-outline-orange" href="{{ $url }}">戻る</a>
-                <a role="button" class="btn btn-outline-orange" href="{{ url("/compare/$recipe_id") }}">タグを編集</a>
+                <a role="button" class="btn btn-outline-orange" href="{{ url("/compare/$recipe_id") }}"><i class="far fa-clone mr-1"></i>比較する</a>
             </div>
         </div>
     </div>

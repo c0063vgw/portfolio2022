@@ -93,7 +93,7 @@
             </div>
             <div class="col-md-5 p-0">
               <div class="card h-100">
-                <div class="card-header lead d-flex bg-grad-center text-white">比較元 </div>
+                <div class="card-header lead d-flex bg-grad-center text-white">比較元</div>
                 <div class="card-body py-4">
                     <div class="py-12">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -163,12 +163,11 @@
                                                     @foreach($items as $item)
                                                     @foreach($item as $val_2)
                                                     <tr>
-                                                        
                                                         <th>{{ $val_2->ingredient }}</th>
                                                         <td>{{ $val_2->quantity}}</td>
-                                                        @endforeach
-                                                        @endforeach
                                                     </tr>
+                                                    @endforeach
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
