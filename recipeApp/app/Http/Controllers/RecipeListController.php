@@ -45,13 +45,18 @@ class RecipeListController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        //dd($data);
+        //dd($data['tag_select']);
         // POSTされたデータをDB（memosテーブル）に挿入
         // MEMOモデルにDBへ保存する命令を出す
 
         //同じタグがあるか確認
-        $exist_tag = Tag::where('name', $data['tag'])->first();
-        //dd($is_exist);
+        if(!empty($data['tag'])){
+            $exist_tag = Tag::where('name', $data['tag'])->first();
+        }else{
+            $exist_tag = Tag::where('name', $data['tag_select'])->first();
+            $data['tag'] = $data['tag_select'];
+        }
+        //dd($exist_tag);
         if( empty($exist_tag['id']) ){
             //先にタグをインサート
             $tag_id = Tag::insertGetId(['name' => $data['tag'], 'user_id' => $data['user_id']]);
@@ -76,7 +81,8 @@ class RecipeListController extends Controller
     public function show(Request $request)
     {
         $recipe_list = Recipe::orderBy("recipe_id", "asc")->paginate(10);
-        //$user = \Auth::user();
+        $tags = Tag::orderBy("name", "asc")->get();
+        //dd($tags);
         $query = Recipe::query();
 
         if ($search = $request->input('search')){
@@ -92,7 +98,7 @@ class RecipeListController extends Controller
             $recipe_list = $query->paginate(10);
         }
 
-        return \view("search", ["recipe_list" => $recipe_list, "search" => $search]);
+        return \view("search", ["recipe_list" => $recipe_list, "search" => $search, "tags" => $tags]);
     }
 
     /**
