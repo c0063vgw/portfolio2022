@@ -36,7 +36,10 @@ int main(int argc, char *argv[])
                 && tmp.find("class") == string::npos
                 && tmp.find("メニュー") == string::npos
                 && tmp.find("冷たい") == string::npos
-                && tmp.find("その他") == string::npos)
+                && tmp.find("その他") == string::npos
+                && tmp.find("粉もの") == string::npos
+                && tmp.find("焼き物") == string::npos
+                && tmp.find("点心") == string::npos)
             {
                 tmp = rm_char(tmp, ' ');
                 tmp.erase(tmp.size()-1);

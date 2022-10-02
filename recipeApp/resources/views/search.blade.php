@@ -18,19 +18,28 @@
                         <button type="button" class="btn btn-outline-success btn-sm font-weight-bold">
                             <i class="fas fa-hashtag"></i>タグ
                         </button>
-                        でタグを登録できます。
+                        からレシピタグを登録できます。
                     </div>
                 @endauth
                 @guest
-                <div>タグ付けされたレシピを比較できます。</div>
+                <div>
+                    <button type="button" class="btn btn-outline-success btn-sm font-weight-bold">
+                        <i class="fas fa-hashtag"></i>タグ
+                    </button>
+                    付けされたレシピを比較できます。
+                </div>
                 <div class="my-1">
                     <a role="button" class="btn btn-outline-danger btn-sm font-weight-bold">
                         <i class="far fa-clone mr-1"></i>比較
                     </a>
-                    でレシピを比較できます。
+                    からレシピ比較画面へと移ります。
                 </div>
                 <div>
-                    ログインでタグ登録機能がご利用いただけます。
+                    ログインで
+                    <button type="button" class="btn btn-outline-success btn-sm font-weight-bold">
+                        <i class="fas fa-hashtag"></i>タグ
+                    </button>
+                    登録機能がご利用いただけます。
                 </div>
                 @endguest
             </div>
