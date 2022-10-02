@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use App\Genre;
 use App\User;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,10 +28,12 @@ class AppServiceProvider extends ServiceProvider
     {
         //特定ののメソッドが呼ばれる前に先に呼ばれるメソッド
         view()->composer('*', function ($view) {
-            // get the current user
             $user = \Auth::user();
+             // インスタンス化
+            $genreModel = new Genre();
+            $genre_list = $genreModel->Genres();
             
-            $view->with('user', $user);
+            $view->with('genre_list', $genre_list)->with('user', $user);
         });
     }
 }

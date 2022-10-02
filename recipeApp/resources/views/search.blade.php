@@ -13,10 +13,25 @@
                     </div>
                 @endif
                 @auth
-                    You are logged in!
+                    <div class="text-success my-1">You are logged in!</div>
+                    <div class="my-1">
+                        <button type="button" class="btn btn-outline-success btn-sm font-weight-bold">
+                            <i class="fas fa-hashtag"></i>タグ
+                        </button>
+                        でタグを登録できます。
+                    </div>
                 @endauth
                 @guest
+                <div>タグ付けされたレシピを比較できます。</div>
+                <div class="my-1">
+                    <a role="button" class="btn btn-outline-danger btn-sm font-weight-bold">
+                        <i class="far fa-clone mr-1"></i>比較
+                    </a>
+                    でレシピを比較できます。
+                </div>
+                <div>
                     ログインでタグ登録機能がご利用いただけます。
+                </div>
                 @endguest
             </div>
         </div>

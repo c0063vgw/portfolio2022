@@ -7,11 +7,11 @@
             <div class="card">
                 @if(!@empty($recipe_list))
                 <div class="card-header bg-grad-grade d-flex justify-content-center py-0">
-                    <span class="text-left mt-3 ml-2 text-danger"><h5>High</h5></span>
+                    <span class="text-left mt-3 mb-2 ml-2 text-danger"><h5>High</h5></span>
                     <ul class="pagination pagination-sm justify-content-center">
                         {{ $recipe_list->appends(request()->input())->links() }}
                     </ul>
-                    <span class="text-right mt-3 mr-2 text-indigo"><h5>Low</h5></span>
+                    <span class="text-right mt-3 mb-2 mr-2 text-indigo"><h5>Low</h5></span>
                 </div>
                 @else
                 <div class="card-header bg-grad-grade">

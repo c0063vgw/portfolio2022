@@ -19,7 +19,7 @@
           <input type='hidden' name='url' value="{{ request()->fullUrl() }}">
           <div class="form-group">
             <label for="tag_select"><h6>「{{ $recipe->recipename }}」のタグを登録</h6></label>
-            <select multiple class='form-control' name='tag_select' id="tag_select">
+            <select class='form-control' name='tag_select' id="tag_select">
               @foreach($tags as $tag)
               <option value="{{ $tag->name }}" {{ $tag->id == $recipe->tag_id ? "selected" : "" }}>{{$tag->name}}</option>
               @endforeach

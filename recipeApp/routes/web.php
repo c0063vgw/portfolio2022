@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+//Route::get('/search', [App\Providers\AppServiceProvider::class, "boot"]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, "show"])->name('home');
 Route::post('/store', 'RecipeListController@store')->name('store');
 Route::get('/responce', 'RecipeListController@responce')->name('responce');

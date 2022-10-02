@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Recipe;  //必要なデータをuse
+use App\Genre;
 use App\Tag;
 use App\User;
 use App\Ingredient;
@@ -16,9 +17,9 @@ class RecipeListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+    
     }
 
     /**
@@ -45,7 +46,7 @@ class RecipeListController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        //dd($data['tag_select']);
+        //dd($data);
         // POSTされたデータをDB（memosテーブル）に挿入
         // MEMOモデルにDBへ保存する命令を出す
 

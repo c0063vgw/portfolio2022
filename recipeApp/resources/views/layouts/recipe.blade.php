@@ -85,9 +85,9 @@
           <div class="row" style='height: 92vh;'>
             <div class="col-md-2 p-0">
               <div class="card h-100">
-              <div class="card-header lead bg-grad-left text-white">タグ一覧</div>
+              <div class="card-header lead bg-grad-left text-white">ジャンル一覧</div>
               <div class="card-body py-2 px-4">
-                <a class='d-block' href='/'>全て表示</a>
+                @include('recipe.genre_search_form')
                 </div>
               </div>
             </div>
