@@ -127,9 +127,9 @@ class RecipeListController extends Controller
 
     public function compare($id)
     {
-        $recipe = Recipe::where("recipe_id", $id)
-                ->first();
-
+        //$query = Recipe::query();
+        $recipe = Recipe::where("recipe_id", $id)->first();
+        
         $items = Ingredient::all()->where('recipe_id', $id)->mapToGroups(function ($item, $key) {
             return [$item->recipe_id => $item];
         })->all();
@@ -138,24 +138,25 @@ class RecipeListController extends Controller
             return [$item->recipe_id => $item];
         })->all();
         //dd($processes);
-        sleep(1);
         $recipe_list = Recipe::select("*")
                     ->where("tag_id", $recipe['tag_id'])
                     ->where("recipes.recipe_id", "!=", $recipe['recipe_id'])
                     ->orderByRaw("time desc, steps desc, food_items desc")
                     ->paginate(1);
-        
+        //dd($recipe_list);
+        $query1 = Ingredient::all();
+        $query2 = Process::all();
         foreach($recipe_list as $val) {
-            $item_list = Ingredient::all()->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
+            $item_list = $query1->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
                 return [$item->recipe_id => $item];
             })->all();
-            $process_list = Process::all()->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
+            $process_list = $query2->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
                 return [$item->recipe_id => $item];
             })->all();
             
             return \view("compare", compact("recipe", "items", "processes","recipe_list", "item_list", "process_list"));
         }
-        //dd($process_list);
+        
         return \view("compare", compact("recipe", "items", "processes"));
     }
 
