@@ -138,6 +138,7 @@ class RecipeListController extends Controller
             return [$item->recipe_id => $item];
         })->all();
         //dd($processes);
+        sleep(1);
         $recipe_list = Recipe::select("*")
                     ->where("tag_id", $recipe['tag_id'])
                     ->where("recipes.recipe_id", "!=", $recipe['recipe_id'])
