@@ -110,7 +110,7 @@
                                     <div class="py-1"></div>
                                     <table class="table-auto w-full table-striped table-warning border shadow my-6">
                                         <tbody>
-                                        @foreach($recipe_list as $recipe)
+                                        @foreach($recipe_list as $recipe)   <!--レシピ一覧を10づつレンダリング-->
                                         <tr class="border">
                                             <td class="px-3 pt-1">
                                                 <a href='{{ $recipe->url }}' class="widelink text-pink" target="_blank">

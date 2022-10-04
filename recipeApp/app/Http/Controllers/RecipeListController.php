@@ -47,8 +47,8 @@ class RecipeListController extends Controller
     {
         $data = $request->all();
         //dd($data);
-        // POSTされたデータをDB（memosテーブル）に挿入
-        // MEMOモデルにDBへ保存する命令を出す
+        // POSTされたデータをDB（recipesとtagsテーブル）に挿入
+        // TagモデルにDBへ保存する命令を出す
 
         //同じタグがあるか確認
         if(!empty($data['tag'])){
@@ -86,7 +86,7 @@ class RecipeListController extends Controller
         //dd($tags);
         $query = Recipe::query();
 
-        if ($search = $request->input('search')){
+        if ($search = $request->input('search')){   //検索フォームでキーワード検索をした場合
 
             $spaceConversion = mb_convert_kana($search, 's');
 
@@ -127,7 +127,7 @@ class RecipeListController extends Controller
 
     public function compare($id)
     {
-        //$query = Recipe::query();
+        //比較元のレシピを取得
         $recipe = Recipe::where("recipe_id", $id)->first();
         
         $items = Ingredient::all()->where('recipe_id', $id)->mapToGroups(function ($item, $key) {
@@ -137,7 +137,8 @@ class RecipeListController extends Controller
         $processes = Process::all()->where('recipe_id', $id)->mapToGroups(function ($item, $key) {
             return [$item->recipe_id => $item];
         })->all();
-        //dd($processes);
+
+        //比較対象となる同じタグが付いたレシピの一覧を取得
         $recipe_list = Recipe::select("*")
                     ->where("tag_id", $recipe['tag_id'])
                     ->where("recipes.recipe_id", "!=", $recipe['recipe_id'])
@@ -156,7 +157,7 @@ class RecipeListController extends Controller
             
             return \view("compare", compact("recipe", "items", "processes","recipe_list", "item_list", "process_list"));
         }
-        
+        //比較対象が存在しない場合は3つの変数のみをビューに返す
         return \view("compare", compact("recipe", "items", "processes"));
     }
 
