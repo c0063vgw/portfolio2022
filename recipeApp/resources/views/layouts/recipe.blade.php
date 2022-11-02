@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'recipeApp') }}</title>
+    <title>{{ config('app.name', 'CooKらべる') }}</title>
 
     <!-- Scripts -->
     <script src="{{ '/js/app.js' }}" defer></script>
@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-grad-header shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/search') }}">
-                    <span class="font-sans display-5 text-white">{{ config('app.name', 'recipeApp') }}</span>
+                    <img src="{{ asset('img/recipeApp.png') }}" alt="くっくらべる" width="280">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

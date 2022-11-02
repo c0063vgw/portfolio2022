@@ -82,7 +82,7 @@
             <div class="content">
                 <a href="{{ url('/search') }}">
                     <div class="title m-b-md">
-                        recipeApp
+                        CooKらべる
                     </div>
                 </a>
                 <div class="links">
