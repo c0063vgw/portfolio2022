@@ -30,7 +30,7 @@
             <div class="container">
                 <a href="{{ url('/search') }}">
                     <!--img src="../../../database/img/recipeApp.png" alt="くっくらべる"-->
-                    <img src="{{ asset('img/recipeApp.png') }}" alt="くっくらべる" width=280">
+                    <img src="{{ asset('img/recipeApp.png') }}" alt="くっくらべる" width="280">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
