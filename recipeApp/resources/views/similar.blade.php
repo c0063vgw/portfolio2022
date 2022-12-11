@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header d-flex bg-grad-grade py-2">
                     <div class="text-white lead mt-1">似ているレシピ一覧</div>
-                    <div class="lead mr-5 lead text-dark" style="margin-left: auto">難易度
+                    <div class="lead mr-5" style="margin-left: auto"><span class="text-dark">難易度</span>
                         @if( $request->simiLevel == "asc")
                         <a class="btn btn-red btn_sm ml-1" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
                             <i class="fas fa-sort-amount-down mr-1"></i>High</a>
