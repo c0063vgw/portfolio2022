@@ -87,74 +87,71 @@
           <div class="row" style='height: 92vh;'>
             <div class="col-md-2 p-0">
               <div class="card h-100">
-                <div class="card-header lead bg-grad-left text-white">ジャンル一覧</div>
+                <div class="card-header lead bg-grad-left text-white px-4">ジャンル一覧</div>
                 <div class="card-body py-2 px-4">
                     @include("recipe.genre_search_form")
                 </div>
               </div>
             </div>
             <div class="col-md-7 p-0">
-              <div class="card h-100">
-                <div class="card-header lead d-flex bg-grad-index text-white">レシピ一覧 </div>
-                <div class="card-body p-1">
-                    <div class="py-12">
-                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                                @if (session('status'))
-                                <div class="success mt-5 px-4 text-green-900">
-                                    {{ session('status') }}
-                                </div>
-                                @endif
-                                <!-- ページ固有要素 -->
-                                <div class="px-4">
-                                    @include("recipe.recipe_search_form")
-                                    <div class="py-1"></div>
-                                    <table class="table-auto w-full table-striped table-warning border shadow my-6">
-                                        <tbody>
-                                        @foreach($recipe_list as $recipe)   <!--レシピ一覧を10づつレンダリング-->
-                                        <tr class="border">
-                                            <td class="px-3 pt-1">
-                                                <a href='{{ $recipe->url }}' class="widelink text-pink" target="_blank">
-                                                    <h5 class="font-weight-bold">
-                                                        <i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}
-                                                    </h5>
-                                                </a>
-                                            </td>
-                                            <td class="px-1 py-2">
-                                                <span class="text-left"><i class="fas fa-user-friends mr-1 text-primary"></i>{{ $recipe->num_people }}</span>
-                                                <span class="text-right"><i class="far fa-clock mr-1 lead"></i>{{ $recipe->time }} min</span>
-                                            </td>
-                                            @auth
-                                            <td class="py-2">
-                                                @include("recipe.recipe_tag_form")
-                                            </td>
-                                            @endauth
-                                            <td class="px-3 py-2">
-                                                @if ($recipe->tag_id == 0)
-                                                <a role="button" class="btn btn-outline-orange btn-sm disabled" aria-disabled="true">
-                                                    <i class="far fa-clone mr-1"></i>比較
-                                                </a>
-                                                @else
-                                                <a role="button" class="btn btn-outline-danger btn-sm font-weight-bold" href="{{ url("/compare/$recipe->recipe_id") }}">
-                                                    <i class="far fa-clone mr-1"></i>比較
-                                                </a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                    <div class="py-2 d-flex justify-content-center ">
-                                        {{ $recipe_list->appends(request()->input())->links('pagination::bootstrap-4') }}
+                <div class="card h-100">
+                    <div class="card-header lead d-flex bg-grad-index text-white">レシピ一覧 </div>
+                        <div class="card-body p-1">
+                            <div class="py-12">
+                                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                                        @if (session('status'))
+                                        <div class="success mt-5 px-4 text-green-900">
+                                            {{ session('status') }}
+                                        </div>
+                                        @endif
+                                        <!-- ページ固有要素 -->
+                                        <div class="px-4">
+                                            @include("recipe.recipe_search_form")
+                                            <div class="py-1"></div>
+                                            <table class="table-auto w-full table-striped table-warning border shadow my-6">
+                                                <tbody>
+                                                @foreach($recipe_list as $recipe)   <!--レシピ一覧を10づつレンダリング-->
+                                                <tr class="border">
+                                                    <td class="px-3 pt-1">
+                                                        <a href='{{ url("/similar/$recipe->recipe_id") }}' class="widelink text-pink">
+                                                            <h5 class="font-weight-bold">
+                                                                <i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}
+                                                            </h5>
+                                                        </a>
+                                                    </td>
+                                                    <td class="px-1 py-2">
+                                                        <span class="text-left"><i class="fas fa-user-friends mr-1 text-primary"></i>{{ $recipe->num_people }}</span>
+                                                        <span class="text-right"><i class="far fa-clock mr-1 lead"></i>{{ $recipe->time }} min</span>
+                                                    </td>
+                                                    @auth
+                                                    <td class="py-2">
+                                                        @include("recipe.recipe_tag_form")
+                                                    </td>
+                                                    @endauth
+                                                    <td class="py-2">
+                                                        <!--a role="button" class="text-danger btn-lg font-weight-bold disabled" aria-disabled="true">
+                                                            <i class="fas fa-external-link-alt"></i>
+                                                        </a-->
+                                                        <a role="button" class="text-danger btn-lg" href="{{ $recipe->url }}" target="_blank">
+                                                            <i class="fas fa-external-link-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                            <div class="py-2 d-flex justify-content-center ">
+                                                {{ $recipe_list->appends(request()->input())->links('pagination::bootstrap-4') }}
+                                            </div>
+                                        </div>
+                                        <!-- /ページ固有要素 ここまで -->
                                     </div>
                                 </div>
-                                <!-- /ページ固有要素 ここまで -->
                             </div>
                         </div>
-                    </div>
-                </div>
-              </div>    
-            </div> <!-- col-md-3 -->
+                    </div>    
+                </div> <!-- col-md-3 -->
             <div class="col-md-3 p-0">
               @yield('content')
             </div>

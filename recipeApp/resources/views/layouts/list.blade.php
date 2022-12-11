@@ -83,17 +83,9 @@
             </div>
         @endif
           <div class="row" style='height: 92vh;'>
-            <div class="col-md-2 p-0">
-              <div class="card h-100">
-              <div class="card-header lead bg-grad-left text-white px-4">ジャンル一覧</div>
-              <div class="card-body py-2 px-4">
-                @include('recipe.genre_search_form')
-                </div>
-              </div>
-            </div>
             <div class="col-md-5 p-0">
               <div class="card h-100">
-                <div class="card-header lead d-flex bg-grad-center text-white">レシピ</div>
+                <div class="card-header lead d-flex bg-grad-center text-white px-4">レシピ</div>
                 <div class="card-body py-4">
                     <div class="py-12">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -105,9 +97,9 @@
                                 @endif
                                 <!-- ページ固有要素 -->
                                 <div>
-                                    <a href='{{ $recipe1->url }}' role="button" class="shadow btn btn-outline-red btn-block text-pink" target="_blank" style="width: auto;">
+                                    <a href='{{ $recipe->url }}' role="button" class="shadow btn btn-outline-red btn-block text-pink" target="_blank" style="width: auto;">
                                         <h5 class="font-weight-bold pt-1">
-                                            <i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe1->recipename }}
+                                            <i class="fas fa-utensils mr-2 text-secondary"></i>{{ $recipe->recipename }}
                                         </h5>
                                     </a>
                                     <div class="card-columns">
@@ -116,15 +108,15 @@
                                                 <thead class="text-white">
                                                     <tr>
                                                         <td class="px-2 display-6 bg-orange">調理時間</td>
-                                                        <td class="px-2 display-6 bg-orange">{{ $recipe1->time }} min</td>
+                                                        <td class="px-2 display-6 bg-orange">{{ $recipe->time }} min</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="px-2 display-6 bg-orange">エネルギー</td>
-                                                        <td class="px-2 display-6 bg-orange">{{ $recipe1->energy }} kal</td>
+                                                        <td class="px-2 display-6 bg-orange">{{ $recipe->energy }} kal</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="px-2 display-6 bg-orange">食塩相当量</td>
-                                                        <td class="px-2 display-6 bg-orange">{{ $recipe1->salt }} g</td>
+                                                        <td class="px-2 display-6 bg-orange">{{ $recipe->salt }} g</td>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -137,7 +129,7 @@
                                                 <div id="process1" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
                                                     <table class="table table-sm">
                                                         <tbody>
-                                                            @foreach($processes1 as $process)
+                                                            @foreach($processes as $process)
                                                             @foreach($process as $val_1)
                                                             <tr>
                                                                 @if($val_1->num != 0)
@@ -156,11 +148,11 @@
                                         </div>
                                         <div class="card border-danger mt-3">
                                             <div class="card-header display-6 text-white text-center bg-orange">
-                                                材料・分量（{{ $recipe1->num_people }}人分）
+                                                材料・分量（{{ $recipe->num_people }}人分）
                                             </div>
                                             <table class="table table-sm">
                                                 <tbody>
-                                                    @foreach($items1 as $item)
+                                                    @foreach($items as $item)
                                                     @foreach($item as $val_2)
                                                     <tr>
                                                         <th>{{ $val_2->ingredient }}</th>
@@ -181,7 +173,7 @@
                 </div>
               </div>    
             </div> <!-- col-md-3 -->
-            <div class="col-md-5 p-0">
+            <div class="col-md-7 p-0">
               @yield('content')
             </div>
           </div> <!-- row justify-content-center -->

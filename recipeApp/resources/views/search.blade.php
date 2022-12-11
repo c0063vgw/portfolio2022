@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12 p-0">
         <div class="card">
-            <div class="card-header lead text-indigo bg-pink">Dashboard</div>
+            <div class="card-header lead text-indigo bg-pink">Tips</div>
             <div class="card-body text-info">
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -23,16 +23,16 @@
                 @endauth
                 @guest
                 <div>
-                    <button type="button" class="btn btn-outline-success btn-sm font-weight-bold">
-                        <i class="fas fa-hashtag"></i>タグ
-                    </button>
-                    付けされたレシピを比較できます。
+                    レシピ比較サイト「<span class="text-danger">CooKらべる</span>」へようこそ！
+                </div>
+                <div>
+                    あなたにぴったりのレシピを探しにいきましょう。
                 </div>
                 <div class="my-1">
-                    <a role="button" class="btn btn-outline-danger btn-sm font-weight-bold">
-                        <i class="far fa-clone mr-1"></i>比較
+                    <a role="button" class="text-danger btn-sm">
+                        <i class="fas fa-external-link-alt"></i>
                     </a>
-                    からレシピ比較画面へと移ります。
+                    から引用元のページへ移ります。
                 </div>
                 <div>
                     ログインで

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 use Illuminate\Http\Request;
 use App\Recipe;  //必要なデータをuse
 use App\Genre;
@@ -81,7 +85,7 @@ class RecipeListController extends Controller
      */
     public function show(Request $request)
     {
-        $recipe_list = Recipe::orderBy("recipe_id", "asc")->paginate(10);
+        $recipe_list = Recipe::where('recipe_id', '!=', 10007087)->orderBy("recipe_id", "asc")->paginate(10);
         $tags = Tag::orderBy("name", "asc")->get();
         //dd($tags);
         $query = Recipe::query();
@@ -92,11 +96,11 @@ class RecipeListController extends Controller
 
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
 
-            foreach($wordArraySearched as $value){
+            foreach($wordArraySearched as $value){  //キーワードをあいまい検索
                 $query->where('recipename', 'like', '%'.$value.'%');
             }
 
-            $recipe_list = $query->paginate(10);
+            $recipe_list = $query->where('recipe_id', '!=', 10007087)->paginate(10);
         }
 
         return \view("search", ["recipe_list" => $recipe_list, "search" => $search, "tags" => $tags]);
@@ -125,7 +129,7 @@ class RecipeListController extends Controller
         //
     }
 
-    public function compare($id)
+    public function similar(Request $request, $id)
     {
         //比較元のレシピを取得
         $recipe = Recipe::where("recipe_id", $id)->first();
@@ -138,27 +142,73 @@ class RecipeListController extends Controller
             return [$item->recipe_id => $item];
         })->all();
 
-        //比較対象となる同じタグが付いたレシピの一覧を取得
-        $recipe_list = Recipe::select("*")
-                    ->where("tag_id", $recipe['tag_id'])
-                    ->where("recipes.recipe_id", "!=", $recipe['recipe_id'])
-                    ->orderByRaw("time desc, steps desc, food_items desc")
-                    ->paginate(1);
-        //dd($recipe_list);
-        $query1 = Ingredient::all();
-        $query2 = Process::all();
-        foreach($recipe_list as $val) {
-            $item_list = $query1->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
-                return [$item->recipe_id => $item];
-            })->all();
-            $process_list = $query2->where('recipe_id', $val['recipe_id'])->mapToGroups(function ($item, $key) {
-                return [$item->recipe_id => $item];
-            })->all();
-            
-            return \view("compare", compact("recipe", "items", "processes","recipe_list", "item_list", "process_list"));
+        //タグの一覧を取得
+        $tags = Tag::orderBy("name", "asc")->get();
+
+        $a = 0;
+        //類似レシピの一覧を取得
+        $recipe_list = Recipe::where('recipe_id','!=', $recipe->recipe_id)->get();
+
+        //レーベンシュタイン距離を算出し、類似度54.5%以上のレシピと距離を配列に格納
+        foreach($recipe_list as $val){
+            $distance = levenshtein_normalized_utf8($recipe->recipename, $val->recipename);
+
+            if($distance >= 0.545 && $val->recipe_id != 10007087){
+                $val['distance'] = intval($distance * 100);
+                $similar[$a++] = $val;
+            }
         }
-        //比較対象が存在しない場合は3つの変数のみをビューに返す
-        return \view("compare", compact("recipe", "items", "processes"));
+        //var_dump($similar);
+        //dd($request->simiLevel);
+
+        //類似レシピが存在しなければnullを返す
+        if(isset($similar)){
+            //難易度でソート
+            $steps = array_column($similar, 'steps');           //手順数
+            $food_items = array_column($similar, 'food_items'); //材料数
+            $distances = array_column($similar, 'distance');    //レーベンシュタイン距離
+
+            if($request->simiLevel == "asc"){    //昇順・降順の判定
+                array_multisort($steps, SORT_DESC, $similar, $food_items, SORT_DESC, $similar, $distances, SORT_DESC, $similar);
+                $similar_list = $this->paginate($similar, 10, null, ['path'=>"/similar/$recipe->recipe_id?simiLevel=asc"]);
+            }else{
+                array_multisort($steps, SORT_ASC, $similar, $food_items, SORT_ASC, $similar, $distances, SORT_DESC, $similar);
+                $similar_list = $this->paginate($similar, 10, null, ['path'=>"/similar/$recipe->recipe_id"]);
+            }
+        }else
+            $similar_list = null;
+
+        //dd($similar_list);
+        return \view("similar", compact("recipe", "items", "processes", "similar_list", "tags", "request"));
+    }
+
+    public function compare($id1, $id2)
+    {
+        //dd($id1);
+        //比較元のレシピを取得
+        $recipe1 = Recipe::where("recipe_id", $id1)->first();
+        
+        $items1 = Ingredient::all()->where('recipe_id', $id1)->mapToGroups(function ($item, $key) {
+            return [$item->recipe_id => $item];
+        })->all();
+
+        $processes1 = Process::all()->where('recipe_id', $id1)->mapToGroups(function ($item, $key) {
+            return [$item->recipe_id => $item];
+        })->all();
+
+        //選択されたレシピを取得
+        $recipe2 = Recipe::where("recipe_id", $id2)->first();
+        
+        $items2 = Ingredient::all()->where('recipe_id', $id2)->mapToGroups(function ($item, $key) {
+            return [$item->recipe_id => $item];
+        })->all();
+
+        $processes2 = Process::all()->where('recipe_id', $id2)->mapToGroups(function ($item, $key) {
+            return [$item->recipe_id => $item];
+        })->all();
+
+        //二つのレシピをビューに返す
+        return \view("compare", compact("recipe1", "items1", "processes1", "recipe2", "items2", "processes2"));
     }
 
     /**
@@ -171,4 +221,65 @@ class RecipeListController extends Controller
     {
         //
     }
+
+    //配列をページネーション
+    private function paginate($items, $perPage = 10, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+}
+
+function levenshtein_normalized_utf8($s1, $s2, $cost_ins = 1, $cost_rep = 1, $cost_del = 1) {
+    $l1 = mb_strlen($s1, 'UTF-8');
+    $l2 = mb_strlen($s2, 'UTF-8');
+    $size = max($l1, $l2);
+    if (!$size) {
+        return 0;
+    }
+    if (!$s1) {
+        return $l2 / $size;
+    }
+    if (!$s2) {
+        return $l1 / $size;
+    }
+    return 1.0 - levenshtein_utf8($s1, $s2, $cost_ins, $cost_rep, $cost_del) / $size;
+}
+
+function levenshtein_utf8($s1, $s2, $cost_ins = 1, $cost_rep = 1, $cost_del = 1) {
+    $s1 = preg_split('//u', $s1, -1, PREG_SPLIT_NO_EMPTY);
+    $s2 = preg_split('//u', $s2, -1, PREG_SPLIT_NO_EMPTY);
+    $l1 = count($s1);
+    $l2 = count($s2);
+    if (!$l1) {
+        return $l2 * $cost_ins;
+    }
+    if (!$l2) {
+        return $l1 * $cost_del;
+    }
+    $p1 = array_fill(0, $l2 + 1, 0);
+    $p2 = array_fill(0, $l2 + 1, 0);
+    for ($i2 = 0; $i2 <= $l2; ++$i2) {
+        $p1[$i2] = $i2 * $cost_ins;
+    }
+    for ($i1 = 0; $i1 < $l1; ++$i1) {
+        $p2[0] = $p1[0] + $cost_ins;
+        for ($i2 = 0; $i2 < $l2; ++$i2) {
+            $c0 = $p1[$i2] + ($s1[$i1] === $s2[$i2] ? 0 : $cost_rep);
+            $c1 = $p1[$i2 + 1] + $cost_del;
+            if ($c1 < $c0) {
+                $c0 = $c1;
+            }
+            $c2 = $p2[$i2] + $cost_ins;
+            if ($c2 < $c0) {
+                $c0 = $c2;
+            }
+            $p2[$i2 + 1] = $c0;
+        }
+        $tmp = $p1;
+        $p1 = $p2;
+        $p2 = $tmp;
+    }
+    return $p1[$l2];
 }
