@@ -13,7 +13,7 @@
                             <i class="fas fa-sort-amount-down mr-1"></i>High</a>
                         @else
                         <a class="btn btn-primary btn_sm ml-1" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
-                            <!--img src="{{ asset('img/sort-amount-up-alt-solid.svg') }}" class="white mr-1" width="17"--><i class="fas fa-sort-amount-up-alt"></i>Low</a>
+                            <i class="fas fa-sort-amount-up-alt ml-1"></i>Low</a>
                         @endif
                     </div>
                 </div>
