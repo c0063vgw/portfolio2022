@@ -109,7 +109,7 @@
                                         <div class="px-4">
                                             @include("recipe.recipe_search_form")
                                             <div class="py-1"></div>
-                                            <table class="table-auto w-full table-striped table-warning border shadow my-6">
+                                            <table class="table-auto w-full table-striped table-warning border shadow my-6 pr-2">
                                                 <tbody>
                                                 @foreach($recipe_list as $recipe)   <!--レシピ一覧を10づつレンダリング-->
                                                 <tr class="border">
