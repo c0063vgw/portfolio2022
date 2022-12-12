@@ -109,7 +109,7 @@
                                         <div class="px-4">
                                             @include("recipe.recipe_search_form")
                                             <div class="py-1"></div>
-                                            <table class="table-auto w-full table-striped table-warning border shadow my-6 pr-5">
+                                            <table class="table-auto w-full table-striped table-warning border shadow my-6">
                                                 <tbody>
                                                 @foreach($recipe_list as $recipe)   <!--レシピ一覧を10づつレンダリング-->
                                                 <tr class="border">
@@ -120,7 +120,7 @@
                                                             </h5>
                                                         </a>
                                                     </td>
-                                                    <td class="px-1 py-2">
+                                                    <td class="pl-1 pr-0 py-2">
                                                         <span class="text-left"><i class="fas fa-user-friends mr-1 text-primary"></i>{{ $recipe->num_people }}</span>
                                                         <span class="text-right"><i class="far fa-clock mr-1 lead"></i>{{ $recipe->time }} min</span>
                                                     </td>
@@ -129,7 +129,7 @@
                                                         @include("recipe.recipe_tag_form")
                                                     </td>
                                                     @endauth
-                                                    <td class="py-2">
+                                                    <td class="py-2 pl-0 pr-3">
                                                         <!--a role="button" class="text-danger btn-lg font-weight-bold disabled" aria-disabled="true">
                                                             <i class="fas fa-external-link-alt"></i>
                                                         </a-->
